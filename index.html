@@ -1,0 +1,799 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mayuresh Naik — AI/ML Engineer</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: light-dark(#f7f8fa, #0b0d10);
+      --surface: light-dark(#ffffff, #12161b);
+      --surface-2: light-dark(#f0f2f5, #181d23);
+      --text: light-dark(#101317, #f3f5f7);
+      --muted: light-dark(#626a75, #a5adb8);
+      --line: light-dark(#e2e5e9, #2a3038);
+      --accent: light-dark(#1b4dff, #7ea0ff);
+      --accent-soft: light-dark(#edf1ff, #1a2542);
+      --shadow: light-dark(0 16px 50px rgba(20, 28, 45, .08), 0 18px 60px rgba(0, 0, 0, .28));
+    }
+
+    :root[data-theme="light"] {
+      color-scheme: light;
+    }
+
+    :root[data-theme="dark"] {
+      color-scheme: dark;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    button,
+    a {
+      font: inherit;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    #app {
+      min-height: 100vh;
+      background-color: var(--bg);
+    }
+
+    .container {
+      width: min(1120px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(16px);
+      background: color-mix(in srgb, var(--bg) 84%, transparent);
+      border-bottom: 1px solid color-mix(in srgb, var(--line) 75%, transparent);
+    }
+
+    .nav-inner {
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      font-weight: 750;
+      letter-spacing: -.03em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 22px;
+      align-items: center;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .theme {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--text);
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+    }
+
+    .hero {
+      padding: 88px 0 92px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 56px;
+      align-items: center;
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 11px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 13px;
+      background: var(--surface);
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #22c55e;
+    }
+
+    .hero-name {
+      margin: 18px 0 24px;
+      font-size: clamp(52px, 6vw, 72px);
+      line-height: .99;
+      font-weight: 800;
+      letter-spacing: -.055em;
+      max-width: 790px;
+    }
+
+    h1 {
+      font-size: 22px;
+      line-height: 1.45;
+      font-weight: 750;
+      letter-spacing: -.025em;
+      margin: 0 0 24px;
+      max-width: 790px;
+      color: var(--accent);
+    }
+
+    .hero p {
+      max-width: 690px;
+      color: var(--muted);
+      font-size: 18px;
+      margin: 0 0 32px;
+    }
+
+    .cta-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 12px 17px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--text);
+      font-weight: 650;
+      font-size: 14px;
+    }
+
+    .btn.primary {
+      background: var(--text);
+      color: var(--bg);
+      border-color: var(--text);
+    }
+
+    .section {
+      padding: 86px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      align-items: end;
+      margin-bottom: 34px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      font-size: 16px;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    h2 {
+      font-size: clamp(30px, 4vw, 46px);
+      line-height: 1.05;
+      letter-spacing: -.045em;
+      margin: 7px 0 0;
+    }
+
+    .section-intro {
+      color: var(--muted);
+      max-width: 580px;
+      margin: 0;
+    }
+
+    .about {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+
+    .about p {
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .fact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .fact {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      border-radius: 16px;
+      padding: 18px;
+    }
+
+    .fact strong {
+      display: block;
+      font-size: 14px;
+    }
+
+    .fact span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 14px;
+    }
+
+    .item {
+      display: grid;
+      grid-template-columns: 170px 1fr;
+      gap: 28px;
+      padding: 25px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .item:first-child {
+      border-top: 0;
+      padding-top: 0;
+    }
+
+    .date {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .item h3 {
+      margin: 0 0 6px;
+      font-size: 19px;
+      letter-spacing: -.02em;
+    }
+
+    .item p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 15px;
+    }
+
+    .tag {
+      border: 1px solid var(--line);
+      background: var(--surface-2);
+      padding: 5px 9px;
+      border-radius: 999px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .project {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      border-radius: 20px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      min-height: 320px;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+
+    .project:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow);
+    }
+
+    .project-num {
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .project h3 {
+      font-size: 22px;
+      line-height: 1.15;
+      letter-spacing: -.035em;
+      margin: 28px 0 12px;
+    }
+
+    .project p {
+      color: var(--muted);
+      font-size: 14px;
+      margin: 0;
+    }
+
+    .project .tag-row {
+      margin-top: auto;
+      padding-top: 24px;
+    }
+
+    .project-links {
+      display: flex;
+      gap: 10px;
+      margin-top: 18px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .project-links a {
+      color: var(--accent);
+    }
+
+    .skills {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .skill-group {
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--surface);
+    }
+
+    .skill-group h3 {
+      margin: 0 0 12px;
+      font-size: 15px;
+    }
+
+    .skill-group p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .awards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .award {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--surface);
+      padding: 20px;
+    }
+
+    .award strong {
+      display: block;
+    }
+
+    .award span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .contact {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: end;
+    }
+
+    .contact p {
+      color: var(--muted);
+      max-width: 550px;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .contact-links a {
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 5px;
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 28px 0 40px;
+      color: var(--muted);
+      font-size: 13px;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    @media (max-width: 850px) {
+      .nav-links a:nth-child(n+4) {
+        display: none;
+      }
+
+      .hero-grid,
+      .about,
+      .contact {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding-top: 70px;
+      }
+
+      .projects {
+        grid-template-columns: 1fr;
+      }
+
+      .skills,
+      .awards {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .container {
+        width: min(100% - 24px, 1120px);
+      }
+
+      .nav-inner {
+        height: 62px;
+      }
+
+      .nav-links {
+        gap: 10px;
+        font-size: 12px;
+      }
+
+      .theme {
+        width: 36px;
+        height: 36px;
+      }
+
+      .item {
+        grid-template-columns: 1fr;
+        gap: 7px;
+      }
+
+      h1 {
+        font-size: 20px;
+      }
+
+      footer {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <header class="nav">
+      <div class="container nav-inner">
+        <a class="brand" href="#home">MN</a>
+        <nav class="nav-links" aria-label="Primary">
+          <a href="#about">About</a><a href="#experience">Experience</a><a href="#projects">Projects</a><a
+            href="#skills">Skills</a><a href="#contact">Contact</a>
+          <button class="theme" id="themeToggle" aria-label="Toggle dark mode">◐</button>
+        </nav>
+      </div>
+    </header>
+    <main>
+      <section class="hero" id="home">
+        <div class="container hero-grid">
+          <div>
+            <span class="kicker"><span class="dot"></span> Open to opportunities</span>
+            <div class="hero-name">Mayuresh Naik</div>
+            <h1>AI/ML Engineer &amp; Computer Engineering Student</h1>
+            <p>Building practical AI, computer vision, and software projects with Python, PyTorch, modern web
+              technologies, and a focus on reliable real-world applications.</p>
+            <div class="cta-row">
+              <a class="btn primary" href="#projects">View projects</a>
+              <a class="btn" href="#contact">Get in touch</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="about">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">01 — About</div>
+            </div>
+          </div>
+          <div class="about">
+            <div>
+              <p>I'm Mayuresh Naik, a Computer Engineering student specializing in AI/ML Honors. My work spans machine
+                learning, computer vision, software development, and full-stack applications.</p>
+              <p>During my on-site research internship at IIT Goa, I worked on ECG Imaging and BioData Augmentation,
+                developing an ECG image classification system using a lightweight 0.95M-parameter MobileViT-XXS vision
+                transformer.</p>
+            </div>
+            <div class="fact-grid">
+              <div class="fact"><strong>Education</strong><span>Bachelor of Computer Engineering (AI/ML Honors)</span>
+              </div>
+              <div class="fact"><strong>Expected graduation</strong><span>2027</span></div>
+              <div class="fact"><strong>CGPA</strong><span>7.55</span></div>
+              <div class="fact"><strong>Based in</strong><span>Goa, India</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="experience">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">02 — Experience</div>
+            </div>
+          </div>
+          <div class="timeline">
+            <article class="item">
+              <div class="date">Aug 2026 — Sep 2026</div>
+              <div>
+                <h3>Indian Institute of Technology (IIT) Goa (On-site) — Research Intern</h3>
+                <p>Worked on “ECG Imaging and BioData Augmentation” under Dr. Shitala Prasad. Developed an ECG image
+                  classification system using a balanced dataset of 7,940 images from 3 distinct data sources,
+                  Stratified 5-Fold cross-validation, and a lightweight 0.95M-parameter MobileViT-XXS vision transformer
+                  across 4 ECG classes.</p>
+                <div class="tag-row"><span class="tag">PyTorch</span><span class="tag">Computer Vision</span><span
+                    class="tag">MobileViT-XXS</span><span class="tag">ECG</span></div>
+              </div>
+            </article>
+            <article class="item">
+              <div class="date">Jul 2025 — Sep 2025</div>
+              <div>
+                <h3>Fluxatic™ Global — Intern</h3>
+                <p>Contributed to projects and gained practical exposure to industry-level workflows and problem-solving
+                  techniques.</p>
+              </div>
+            </article>
+            <article class="item">
+              <div class="date">Jun 2025 - Jun 2025</div>
+              <div>
+                <h3>Lenovo LEAP — Artificial Intelligence Internship</h3>
+                <p>Developed AI-based prototypes and worked on real-world problem statements using practical approaches.
+                </p>
+              </div>
+            </article>
+            <article class="item">
+              <div class="date">Jul 2024 — Sep 2024</div>
+              <div>
+                <h3>Google for Developers — AI/ML Virtual Internship</h3>
+                <p>Completed hands-on training in machine learning and artificial intelligence, including preprocessing,
+                  model evaluation, and performance optimization.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="projects">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">03 — PROJECTS</div>
+            </div>
+          </div>
+          <div class="projects">
+            <article class="project"><span class="project-num">01 / RESEARCH</span>
+              <h3>ECG Image Classification</h3>
+              <p>Built a lightweight ECG image classification system using the 0.95M-parameter MobileViT-XXS vision
+                transformer, a balanced dataset of 7,940 images from 3 distinct data sources, and Stratified 5-Fold
+                cross-validation. The overall test accuracy was 88.38%, with class-specific accuracies of 95.9% for
+                NORMAL ECGs and 93.6% for VCB.</p>
+              <div class="tag-row"><span class="tag">Python</span><span class="tag">PyTorch</span><span
+                  class="tag">MobileViT</span><span class="tag">Computer Vision</span></div>
+            </article>
+            <article class="project"><span class="project-num">02 / COMPUTER VISION</span>
+              <h3>Gesture-Controlled Gaming System</h3>
+              <p>Developed a real-time webcam system that detects hand gestures and translates them into keyboard inputs
+                for game control, combining image processing, gesture recognition, and event automation.</p>
+              <div class="tag-row"><span class="tag">Python</span><span class="tag">OpenCV</span><span
+                  class="tag">MediaPipe</span><span class="tag">pynput</span></div>
+              <div class="project-links"><a href="https://github.com/MayureshNaik111/Traffic-Rider-Gesture-Control"
+                  target="_blank" rel="noreferrer">GitHub ↗</a></div>
+            </article>
+            <article class="project"><span class="project-num">03 / GENERATIVE AI</span>
+              <h3>Agile User Story Generator</h3>
+              <p>Fine-tuned and deployed Microsoft Phi-2 using QLoRA to generate structured Agile user stories,
+                acceptance criteria, and priority levels from feature descriptions, with JSON validation and a Hugging
+                Face deployment.</p>
+              <div class="tag-row"><span class="tag">Phi-2</span><span class="tag">QLoRA</span><span
+                  class="tag">Gradio</span><span class="tag">Hugging Face</span></div>
+              <div class="project-links"><a href="https://huggingface.co/spaces/MayureshNaik/agile-user-story-generator"
+                  target="_blank" rel="noreferrer">Live demo ↗</a><a
+                  href="https://huggingface.co/spaces/MayureshNaik/agile-user-story-generator/tree/main" target="_blank"
+                  rel="noreferrer">GitHub ↗</a></div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="skills">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">04 — Skills</div>
+            </div>
+          </div>
+          <div class="skills">
+            <div class="skill-group">
+              <h3>Programming</h3>
+              <p>C · C++ · Python · Java · JavaScript</p>
+            </div>
+            <div class="skill-group">
+              <h3>Web Technologies</h3>
+              <p>HTML · CSS · Tailwind CSS · React.js · Next.js · FastAPI</p>
+            </div>
+            <div class="skill-group">
+              <h3>AI / Computer Vision</h3>
+              <p>PyTorch · OpenCV · MediaPipe · Gradio · QLoRA · Hugging Face</p>
+            </div>
+            <div class="skill-group">
+              <h3>Databases &amp; Tools</h3>
+              <p>MySQL · Firebase · Git · GitHub · Docker · VS Code</p>
+            </div>
+            <div class="skill-group">
+              <h3>Deployment</h3>
+              <p>Vercel (Frontend) · Render (Backend)</p>
+            </div>
+            <div class="skill-group">
+              <h3>Core Areas</h3>
+              <p>Machine Learning · Computer Vision · Deep Learning · Software Development</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="certifications">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">05 — Certifications</div>
+            </div>
+          </div>
+          <div class="awards">
+            <div class="award"><strong>Java Course: Mastering the Fundamentals</strong><span>Scaler · Feb 2026</span>
+            </div>
+            <div class="award"><strong>NPTEL Elite Certification — Software Testing</strong><span>NPTEL · Nov
+                2025</span></div>
+            <div class="award"><strong>Oracle OCI Generative AI Professional</strong><span>Oracle · Oct 2025</span>
+            </div>
+            <div class="award"><strong>Oracle OCI AI Foundations Associate</strong><span>Oracle · Sep 2025</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="achievements">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">06 — Achievements &amp; VOLUNTEERING</div>
+            </div>
+          </div>
+          <div class="awards">
+            <div class="award"><strong>2nd Place — INEX India International Innovation &amp; Invention Expo
+                2025</strong><span>Nov 2025</span></div>
+            <div class="award"><strong>1st Place — Kshitij 2025, Don Bosco Project Expo</strong><span>Jul 2025</span>
+            </div>
+            <div class="award"><strong>Event Volunteer — Dream Big 2026, DBCE</strong><span>Apr 2026</span></div>
+            <div class="award"><strong>Technical Volunteer — Inspirus 2025, DBCE</strong><span>Oct 2025</span></div>
+            <div class="award"><strong>Event Volunteer — Dream Big 2025, DBCE</strong><span>Mar 2025</span></div>
+            <div class="award"><strong>Event Volunteer — International Purple Fest 2024, Goa</strong><span>Jan
+                2024</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="education">
+        <div class="container">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">07 — Education</div>
+            </div>
+          </div>
+          <div class="timeline">
+            <article class="item">
+              <div class="date">Expected 2027</div>
+              <div>
+                <h3>Bachelor of Computer Engineering (AI/ML Honors)</h3>
+                <p>Don Bosco College of Engineering, Margao, Goa · 7.55 CGPA</p>
+                <div class="tag-row"><span class="tag">OOP</span><span class="tag">Data Structures</span><span
+                    class="tag">DBMS</span><span class="tag">Operating Systems</span></div>
+              </div>
+            </article>
+            <article class="item">
+              <div class="date">2023</div>
+              <div>
+                <h3>HSSC in Science</h3>
+                <p>Loyola Higher Secondary School of Science and Arts, Margao, Goa · 68.83%</p>
+              </div>
+            </article>
+            <article class="item">
+              <div class="date">2021</div>
+              <div>
+                <h3>SSC</h3>
+                <p>Mahila &amp; Nutan English High School, Margao, Goa · 70.5%</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="contact">
+        <div class="container contact">
+          <div>
+            <div class="eyebrow">08 — Contact</div>
+            <h2>Let's build something useful.</h2>
+            <p>For internships, entry-level opportunities, collaborations, or project discussions, you can reach me
+              through email or the profiles below.</p>
+          </div>
+          <div class="contact-links">
+            <a href="mailto:naikmayuresh111@gmail.com">naikmayuresh111@gmail.com ↗</a>
+            <a href="https://www.linkedin.com/in/mayuresh-naik-dev" target="_blank" rel="noreferrer">LinkedIn ↗</a>
+            <a href="https://github.com/MayureshNaik111" target="_blank" rel="noreferrer">GitHub ↗</a>
+            <a href="https://huggingface.co/MayureshNaik" target="_blank" rel="noreferrer">Hugging Face ↗</a>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="container"><span>© 2026 Mayuresh Naik</span><span>AI/ML · Software Development</span></footer>
+  </div>
+  <script>
+    const root = document.documentElement;
+    const btn = document.getElementById('themeToggle');
+    const saved = localStorage.getItem('theme');
+    root.dataset.theme = saved || 'light';
+    function updateIcon() { btn.textContent = root.dataset.theme === 'dark' ? '☀' : '◐'; }
+    updateIcon();
+    btn.addEventListener('click', () => {
+      root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('theme', root.dataset.theme);
+      updateIcon();
+    });
+  </script>
+</body>
+
+</html>
